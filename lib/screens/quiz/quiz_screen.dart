@@ -29,32 +29,102 @@ class _QuizScreenState extends State<QuizScreen> {
   final List<Question> _questions = [
     Question(
       id: '1',
-      title: 'What is the capital of India?',
+      title: 'What is the capital of France?',
       options: {
-        'New Delhi': true,
-        'Bangalore': false,
-        'Mumbai': false,
-        'Chennai': false,
+        'Paris': true,
+        'Berlin': false,
+        'Rome': false,
+        'Madrid': false,
       },
     ),
     Question(
       id: '2',
-      title: 'What is the capital of USA?',
+      title: 'Who is the author of "The Great Gatsby"?',
       options: {
-        'Washington D.C.': true,
-        'New York': false,
-        'Los Angeles': false,
-        'Chicago': false,
+        'F. Scott Fitzgerald': true,
+        'Ernest Hemingway': false,
+        'John Steinbeck': false,
+        'Mark Twain': false,
       },
     ),
     Question(
       id: '3',
-      title: 'What is the capital of China?',
+      title: 'What is the chemical symbol for water?',
       options: {
-        'Beijing': true,
-        'Shanghai': false,
-        'Shenzhen': false,
-        'Guangzhou': false,
+        'H2O': true,
+        'CO2': false,
+        'O2': false,
+        'NaCl': false,
+      },
+    ),
+    Question(
+      id: '4',
+      title: 'What is the tallest mountain in the world?',
+      options: {
+        'Mount Everest': true,
+        'K2': false,
+        'Kangchenjunga': false,
+        'Lhotse': false,
+      },
+    ),
+    Question(
+      id: '5',
+      title: 'Who painted the Mona Lisa?',
+      options: {
+        'Leonardo da Vinci': true,
+        'Pablo Picasso': false,
+        'Vincent van Gogh': false,
+        'Michelangelo': false,
+      },
+    ),
+    Question(
+      id: '6',
+      title: 'What is the largest ocean on Earth?',
+      options: {
+        'Pacific Ocean': true,
+        'Atlantic Ocean': false,
+        'Indian Ocean': false,
+        'Southern Ocean': false,
+      },
+    ),
+    Question(
+      id: '7',
+      title: 'What year did World War II end?',
+      options: {
+        '1945': true,
+        '1939': false,
+        '1941': false,
+        '1943': false,
+      },
+    ),
+    Question(
+      id: '8',
+      title: 'Which planet is known as the Red Planet?',
+      options: {
+        'Mars': true,
+        'Jupiter': false,
+        'Saturn': false,
+        'Venus': false,
+      },
+    ),
+    Question(
+      id: '9',
+      title: 'Who is credited with discovering gravity?',
+      options: {
+        'Isaac Newton': true,
+        'Albert Einstein': false,
+        'Galileo Galilei': false,
+        'Nikola Tesla': false,
+      },
+    ),
+    Question(
+      id: '10',
+      title: 'What is the primary ingredient in guacamole?',
+      options: {
+        'Avocado': true,
+        'Tomato': false,
+        'Onion': false,
+        'Lemon': false,
       },
     ),
   ];
@@ -63,6 +133,11 @@ class _QuizScreenState extends State<QuizScreen> {
   void initState() {
     super.initState();
     startTimer();
+    _questions.shuffle();
+    _questions.forEach((question) {
+      question.options =
+          Map.fromEntries(question.options.entries.toList()..shuffle());
+    });
   }
 
   @override
@@ -109,7 +184,7 @@ class _QuizScreenState extends State<QuizScreen> {
           selectedAnswer = key;
         }
       });
-      Future.delayed(Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: 1), () {
         setState(() {
           _currentQuestion++;
           _selectedAnswerIndex = -1;
@@ -157,7 +232,7 @@ class _QuizScreenState extends State<QuizScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 20.0),
-            Text('${_currentQuestion} of ${_questions.length}'),
+            Text('${_currentQuestion + 1} of ${_questions.length}'),
             const SizedBox(height: 20.0),
             ProgressBar(timeLeft: _timeLeft),
             const SizedBox(height: 20.0),
